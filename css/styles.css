@@ -1,0 +1,528 @@
+/**
+  Нормализация блочной модели
+ */
+*,
+::before,
+::after {
+	box-sizing: border-box;
+}
+
+/**
+  Убираем внутренние отступы слева тегам списков,
+  у которых есть атрибут class
+ */
+:where(ul, ol):where([class]) {
+	padding-left: 0;
+}
+
+/**
+  Убираем внешние отступы body и двум другим тегам,
+  у которых есть атрибут class
+ */
+body,
+:where(blockquote, figure):where([class]) {
+	margin: 0;
+}
+
+/**
+  Убираем внешние отступы вертикали нужным тегам,
+  у которых есть атрибут class
+ */
+:where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl):where([class]) {
+	margin-block: 0;
+}
+
+:where(dd[class]) {
+	margin-left: 0;
+}
+
+:where(fieldset[class]) {
+	margin-left: 0;
+	padding: 0;
+	border: none;
+}
+
+/**
+  Убираем стандартный маркер маркированному списку,
+  у которого есть атрибут class
+ */
+:where(ul[class]) {
+	list-style: none;
+}
+
+:where(address[class]) {
+	font-style: normal;
+}
+
+/**
+  Обнуляем вертикальные внешние отступы параграфа,
+  объявляем локальную переменную для внешнего отступа вниз,
+  чтобы избежать взаимодействие с более сложным селектором
+ */
+p {
+	--paragraphMarginBottom: 24px;
+	margin-block: 0;
+}
+
+/**
+  Внешний отступ вниз для параграфа без атрибута class,
+  который расположен не последним среди своих соседних элементов
+ */
+p:where(:not([class]):not(:last-child)) {
+	margin-bottom: var(--paragraphMarginBottom);
+}
+
+/**
+  Упрощаем работу с изображениями и видео
+ */
+img,
+video {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+/**
+  Наследуем свойства шрифт для полей ввода
+ */
+input,
+textarea,
+select,
+button {
+	font: inherit;
+}
+
+html {
+	/**
+     Пригодится в большинстве ситуаций
+     (когда, например, нужно будет "прижать" футер к низу сайта)
+    */
+	height: 100%;
+	/**
+     Убираем скачок интерфейса по горизонтали
+     при появлении / исчезновении скроллбара
+    */
+	scrollbar-gutter: stable;
+}
+
+/**
+  Плавный скролл
+ */
+html,
+:has(:target) {
+	scroll-behavior: smooth;
+}
+
+body {
+	/**
+     Пригодится в большинстве ситуаций
+     (когда, например, нужно будет "прижать" футер к низу сайта)
+    */
+	min-height: 100%;
+	/**
+     Унифицированный интерлиньяж
+    */
+	line-height: 1.5;
+}
+
+/**
+  Нормализация высоты элемента ссылки при его инспектировании в DevTools
+ */
+a:where([class]) {
+	display: inline-flex;
+}
+
+/**
+  Курсор-рука при наведении на элемент
+ */
+button,
+label {
+	cursor: pointer;
+}
+
+/**
+  Приводим к единому цвету svg-элементы
+  (за исключением тех, у которых уже указан
+  атрибут fill со значением 'none' или начинается с 'url')
+ */
+:where([fill]:not([fill="none"], [fill^="url"])) {
+	fill: currentColor;
+}
+
+/**
+  Приводим к единому цвету svg-элементы
+  (за исключением тех, у которых уже указан
+  атрибут stroke со значением 'none')
+ */
+:where([stroke]:not([stroke="none"], [stroke^="url"])) {
+	stroke: currentColor;
+}
+
+/**
+  Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+ */
+svg * {
+	transition-property: fill, stroke;
+}
+
+/**
+  Приведение рамок таблиц в классический 'collapse' вид
+ */
+:where(table) {
+	border-collapse: collapse;
+	border-color: currentColor;
+}
+
+@font-face {
+	font-family: "Comfortaa";
+	src: url(/fonts/Comfortaa-Light.woff2) format("woff2");
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Comfortaa";
+	src: url(/fonts/Comfortaa-Medium.woff2) format("woff2");
+	font-weight: 500;
+	font-style: normal;
+}
+:root {
+	--color-dark: #090015;
+	--color-dark-alt: #12002a;
+	--color-light: #e4e3fa;
+	--color-alt: #ab49b7;
+	--transition-duration: 0.4s;
+	--font-family-base: "Comfortaa", sans-serif;
+}
+
+.container {
+	margin-inline: 10vw;
+}
+
+body {
+	font-size: clamp(16px, 1.25vw, 18px);
+	font-family: var(--font-family-base);
+	font-weight: 300;
+	line-height: 1.28;
+	color: var(--color-light);
+	background-color: var(--color-dark);
+}
+
+a,
+button,
+input,
+textarea,
+svg * {
+	transition-duration: var(--transition-duration);
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.header {
+	position: sticky;
+	width: 80vw;
+	left: 10vw;
+	top: 15px;
+	padding: 15px 30px;
+	border-radius: 20px;
+	background-color: var(--color-dark-alt);
+}
+@media (max-width: 480px) {
+	.header {
+		position: fixed;
+		width: 100vw;
+		left: 0;
+		top: 0;
+		border-radius: 0;
+	}
+}
+.header__logo {
+	width: 10vw;
+}
+.header__inner {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.header__input {
+	padding-block: 10px;
+	padding-right: 40px;
+	padding-left: 20px;
+	border-radius: 20px;
+	width: 30vw;
+	background-color: var(--color-dark);
+	color: var(--color-light);
+	border: 1px solid var(--color-dark);
+	outline: 0;
+}
+@media (max-width: 860px) {
+	.header__input {
+		display: none;
+	}
+}
+.header__input::-moz-placeholder {
+	color: var(--color-light);
+}
+.header__input::placeholder {
+	color: var(--color-light);
+}
+@media (hover: hover) {
+	.header__input:hover {
+		border-color: var(--color-alt);
+	}
+	.header__input:hover::-moz-placeholder {
+		color: var(--color-alt);
+	}
+	.header__input:hover::placeholder {
+		color: var(--color-alt);
+	}
+}
+@media (max-width: 480px) {
+	.header__menu-item {
+		font-size: 12px;
+	}
+}
+@media (hover: hover) {
+	.header__menu-item:hover {
+		color: var(--color-alt);
+	}
+}
+.header__menu-list {
+	display: flex;
+	align-items: center;
+	-moz-column-gap: 30px;
+	column-gap: 30px;
+}
+@media (max-width: 860px) {
+	.header__menu-list {
+		-moz-column-gap: 20px;
+		column-gap: 20px;
+	}
+}
+
+.main__hello {
+	padding-block: 20vw;
+	text-align: center;
+}
+@media (max-width: 480px) {
+	.main__hello {
+		font-size: 10px;
+		padding-block: 60vw;
+	}
+}
+.main__hello-link {
+	font-size: 23px;
+	text-decoration: underline;
+}
+@media (max-width: 480px) {
+	.main__hello-link {
+		font-size: 17px;
+	}
+}
+@media (hover: hover) {
+	.main__hello-link:hover {
+		color: var(--color-alt);
+	}
+}
+.main__info {
+	text-align: center;
+	padding-block: 100px;
+	font-size: 35px;
+}
+@media (max-width: 480px) {
+	.main__info {
+		font-size: 17px;
+		padding-block: 0px;
+		padding-top: 100px;
+		padding-bottom: 20px;
+	}
+}
+.main__data {
+	font-size: 25px;
+}
+@media (max-width: 480px) {
+	.main__data {
+		font-size: 13px;
+	}
+}
+.main__data-link {
+	text-decoration: underline;
+}
+@media (hover: hover) {
+	.main__data-link:hover {
+		color: var(--color-alt);
+		text-decoration: none;
+	}
+}
+.main__practice {
+	font-size: 20px;
+	padding-top: 10px;
+}
+@media (max-width: 480px) {
+	.main__practice {
+		font-size: 13px;
+	}
+}
+.main__table {
+	margin-top: 100px;
+}
+@media (max-width: 480px) {
+	.main__table {
+		margin-top: 30px;
+	}
+}
+.main__table-item {
+	padding-left: 50px;
+}
+@media (max-width: 480px) {
+	.main__table-item {
+		font-size: 13px;
+		padding-inline: 20px;
+	}
+}
+.main__table-txt {
+	font-size: 20px;
+	margin-bottom: 15px;
+}
+@media (max-width: 480px) {
+	.main__table-txt {
+		font-size: 13px;
+	}
+}
+.main__table-img {
+	margin-bottom: 30px;
+}
+.main__table-button {
+	padding: 20px 40px;
+	margin-bottom: 5vw;
+	border-radius: 10px;
+	background-color: var(--color-dark-alt);
+}
+@media (max-width: 480px) {
+	.main__table-button {
+		padding: 10px 20px;
+		font-size: 13px;
+	}
+}
+@media (hover: hover) {
+	.main__table-button:hover {
+		background-color: var(--color-alt);
+		color: var(--color-dark-alt);
+	}
+}
+.main__cat {
+	position: absolute;
+	right: 0;
+	top: 150vw;
+	z-index: -1;
+	opacity: 0.3;
+	width: 100px;
+}
+@media (max-width: 860px) {
+	.main__cat {
+		display: none;
+	}
+}
+.main__end {
+	text-align: center;
+}
+@media (max-width: 480px) {
+	.main__end {
+		padding-block: 15px;
+		font-size: 13px;
+	}
+}
+.main__end-link {
+	text-decoration: underline;
+}
+@media (hover: hover) {
+	.main__end-link:hover {
+		color: var(--color-alt);
+		text-decoration: none;
+	}
+}
+
+.footer {
+	background-color: var(--color-dark-alt);
+}
+.footer__menu {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 40px;
+	padding-bottom: 100px;
+	margin-inline: 10vw;
+}
+@media (max-width: 480px) {
+	.footer__menu {
+		padding-bottom: 30px;
+	}
+}
+.footer__menu-item {
+	display: grid;
+	grid-template-rows: 90px 60px 60px;
+}
+@media (max-width: 480px) {
+	.footer__menu-item {
+		font-size: 10px;
+		grid-template-rows: 40px 25px 25px;
+	}
+}
+@media (max-width: 860px) {
+	.footer__menu-cat {
+		display: none;
+	}
+}
+.footer__menu-cat2 {
+	margin: 30px 30px;
+}
+.footer__menu-cat3 {
+	margin: -100px;
+}
+.footer__menu-cat4 {
+	margin: -120px 90px;
+}
+.footer__menu-what {
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+.news__text {
+	font-size: 50px;
+	margin-top: 80px;
+	margin-bottom: 30px;
+}
+@media (max-width: 480px) {
+	.news__text {
+		font-size: 20px;
+	}
+}
+.news__list {
+	display: grid;
+	grid-template-columns: 40vw 40vw;
+	grid-template-rows: 650px 650px 600px;
+}
+@media (max-width: 860px) {
+	.news__list {
+		grid-template-columns: 75vw;
+		grid-template-rows: 700px 550px 750px 750px 600px 600px;
+	}
+}
+
+.video {
+	display: grid;
+	grid-template-columns: 24.8vw 24.8vw 24.8vw 24.8vw;
+	grid-template-rows: 24vw 24vw 24vw;
+}
+
+.soon {
+	align-items: center;
+	margin-block: 25vw;
+	margin-inline: 30vw;
+	transform: rotate(35deg);
+	margin-bottom: 300px;
+} /*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,47 @@
+.footer {
+
+	background-color: var(--color-dark-alt);
+
+	&__menu {
+		@include mobile-s {
+			padding-bottom: 30px;
+		}
+
+		display: flex;
+		justify-content: space-between;
+		margin-top: 40px;
+		padding-bottom: 100px;
+		margin-inline: 10vw;
+
+		&-item {
+			@include mobile-s {
+				font-size: 10px;
+				grid-template-rows: 40px 25px 25px;
+			}
+
+			display: grid;
+			grid-template-rows: 90px 60px 60px;
+		}
+
+		&-cat {
+			@include mobile {
+				display: none;
+			}
+		}
+
+		&-cat2 {
+			margin: 30px 30px;
+		}
+		&-cat3 {
+			margin: -100px;
+		}
+		&-cat4 {
+			margin: -120px 90px;
+		}
+
+		&-what {
+			cursor: pointer;
+			user-select: none;
+		}
+	}
+}

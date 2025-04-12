@@ -1,0 +1,23 @@
+.news {
+	&__text {
+		@include mobile-s {
+			font-size: 20px;
+		}
+		font-size: 50px;
+		margin-top: 80px;
+		margin-bottom: 30px;
+	}
+
+	&__list {
+
+
+		@include mobile {
+			grid-template-columns: 75vw;
+			grid-template-rows: 700px 550px 750px 750px 600px 600px;
+		}
+
+		display: grid;
+		grid-template-columns: 40vw 40vw;
+		grid-template-rows: 650px 650px 600px;
+	}
+}

@@ -1,0 +1,139 @@
+.main {
+	&__hello {
+		@include mobile-s {
+			font-size: 10px;
+			padding-block: 60vw;
+		}
+
+		padding-block: 20vw;
+		text-align: center;
+
+		&-link {
+			@include mobile-s {
+				font-size: 17px;
+			}
+
+			font-size: 23px;
+			text-decoration: underline;
+			@include hover {
+				color: var(--color-alt);
+			}
+		}
+	}
+
+	&__info {
+		@include mobile-s {
+			font-size: 17px;
+			padding-block: 0px;
+			padding-top: 100px;
+			padding-bottom: 20px;
+		}
+
+		text-align: center;
+		padding-block: 100px;
+		font-size: 35px;
+	}
+
+	&__data {
+		@include mobile-s {
+			font-size: 13px;
+		}
+
+		font-size: 25px;
+
+		&-link {
+			text-decoration: underline;
+			@include hover {
+				color: var(--color-alt);
+				text-decoration: none;
+			}
+		}
+	}
+
+	&__practice {
+		@include mobile-s {
+			font-size: 13px;
+		}
+
+		font-size: 20px;
+		padding-top: 10px;
+	}
+
+	&__table {
+		@include mobile-s {
+			margin-top: 30px;
+		}
+
+		margin-top: 100px;
+
+		&-item {
+			@include mobile-s {
+			font-size: 13px;
+			padding-inline: 20px;
+		}
+
+			padding-left: 50px;
+		}
+
+		&-txt {
+			@include mobile-s {
+				font-size: 13px;
+			}
+
+			font-size: 20px;
+			margin-bottom: 15px;
+		}
+
+		&-img {
+			margin-bottom: 30px;
+		}
+
+		&-button {
+			@include mobile-s {
+				padding: 10px 20px;
+				font-size: 13px;
+			}
+
+			padding: 20px 40px;
+			margin-bottom: 5vw;
+			border-radius: 10px;
+			background-color: var(--color-dark-alt);
+
+			@include hover {
+				background-color: var(--color-alt);
+				color: var(--color-dark-alt);
+			}
+		}
+	}
+
+	&__cat {
+		@include mobile {
+			display: none;
+		}
+
+		position: absolute;
+		right: 0;
+		top: 150vw;
+		z-index: -1;
+		opacity: 0.3;
+		width: 100px;
+	}
+
+	&__end {
+		@include mobile-s {
+			padding-block: 15px;
+			font-size: 13px;
+		}
+
+		text-align: center;
+
+		&-link {
+			text-decoration: underline;
+
+			@include hover {
+				color: var(--color-alt);
+				text-decoration: none;
+			}
+		}
+	}
+}
